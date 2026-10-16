@@ -6,6 +6,12 @@ public class Filme {
 
     private String plataforma;
 
+    public Filme(String nome, int anoLancamento, String plataforma){
+        this.nome = nome;
+        this.anoLancamento = anoLancamento;
+        this.plataforma = plataforma;
+    }
+
     public String toString() {
         return this.nome + " - " + this.anoLancamento;
     }
@@ -19,7 +25,7 @@ public class Filme {
             return false;
         }
         Filme oFilme = (Filme) o;
-        if (oFilme.getNome() == this.nome || oFilme.getLancamento() == this.getLancamento()) {
+        if (oFilme.getNome() == this.nome && oFilme.getLancamento() == this.getLancamento()) {
             return true;
         }
         return false;
