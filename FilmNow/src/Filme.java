@@ -44,7 +44,7 @@ public class Filme {
         return this.anoLancamento;
     }
 
-    public String getPlataforma() {
+    public String getLocal() {
         return this.local;
     }
 
