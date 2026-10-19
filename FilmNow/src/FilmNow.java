@@ -3,47 +3,69 @@ public class FilmNow {
 
     private Filme[] filmes;
 
-    private int iFilmes;
-
     private Filme[] hotList;
 
     private int iHotList;
 
     public FilmNow() {
         this.filmes = new Filme[100];
-        this.iFilmes = 0;
         this.hotList = new Filme[10];
         this.iHotList = 0;
     }
 
     public String listaFilmes() {
         String listagem = "";
-        for (Filme filme: filmes) {
-            listagem += filme + "\n";
+        for (int i = 0; i < filmes.length; i++) {
+            if (filmes[i] != null) {
+                listagem += i+1 + " - " + filmes[i].getNome() + "\n";
+            }
         }
         return listagem;
     }
 
     public String detalharFilme(int posicao) {
-        //fazer comparação para ver se está na hotlist
-
+        if (filmes[posicao - 1] == null) {
+            return "POSIÇÃO INVÁLIDA";
+        }
+        for (Filme filmeHL : hotList) {
+            if (filmeHL != null) {
+                if (filmeHL.equals(filmes[posicao - 1])) {
+                    return "🔥 " + filmes[posicao - 1].toString();
+                }
+            }
+        }
         return filmes[posicao - 1].toString();
     }
 
-    public boolean adicionarFilme(String nome, int anoLancamento, String plataforma, int posicaoFilme) {
-        filmes[iFilmes] = new Filme(nome, anoLancamento, plataforma);
-        iFilmes++;
+    public String adicionarFilme(String nome, String anoLancamento, String plataforma, int posicaoFilme) {
+        if (nome.equals("") || anoLancamento.equals("") || plataforma.equals("")) {
+            return "FILME INVÁLIDO\n";
+        }
+        if (1 <= posicaoFilme && posicaoFilme <= 100) {
+                Filme novofilme = new Filme(nome, anoLancamento, plataforma);
+                for (int i = 0; i < filmes.length; i++) {
+                    if (filmes[i] != null) {
+                        if (novofilme.equals(filmes[i])) {
+                            return "FILME JÁ ADICIONADO!\n";
+                        }
+                    }
+                filmes[posicaoFilme - 1] = novofilme;
+                return "FILME ADICIONADO!\n";
+            }
+        }
+        return "POSIÇÃO INVALIDA\n";
     }
 
-    public String adicionarNaHotlist(int posicao) {
-        if (1 <= posicao && posicao <= 100) {
-            if (filmes[posicao - 1] != null) {
-                hotList[iHotList] = filmes[posicao - 1];
-                return "Filme adicionado à HotList!"
+    public String adicionarNaHotlist(int posicaoFilmes, int posicaoHotlist) {
+        if (1 <= posicaoFilmes && posicaoFilmes <= 100) {
+            if (filmes[posicaoFilmes - 1] != null) {
+                hotList[posicaoHotlist - 1] = filmes[posicaoFilmes - 1];
+                return "ADICIONADO À HOTLIST NA POSIÇÃO " + (posicaoHotlist + 1) + "!";
+            } else {
+                return "SEM FILMES NA POSIÇÃO!";
             }
-            return "Sem filmes na posição!"
         }
-        return "Posição inválida!";
+        return "POSIÇÃO INVÁLIDA!";
     }
 
     public void removeDaHotlist(int posicaoHoslist) {
@@ -51,16 +73,15 @@ public class FilmNow {
     }
 
     public String exibirHotList() {
-
-    }
-
-    private boolean estaNaHotlist(int posicao) {
-        for (int i = 0, i < iHotList, i++) {
-            if (filmes[posicao - 1].equals(hotList[i])) {
-                return true;
+        String hotlistStr = "";
+        for (int i = 0; i < hotList.length; i++) {
+            if (hotList[i] != null) {
+                hotlistStr += i + 1 + " - " + hotList[i].getNome() + ", " + hotList[i].getLancamento();
             }
-            return false;
         }
+        if (hotlistStr.equals("")) {
+            return "Sem filmes na HotList!";
+        }
+        return hotlistStr;
     }
-
 }

@@ -2,18 +2,18 @@ public class Filme {
 
     private String nome;
 
-    private int anoLancamento;
+    private String anoLancamento;
 
-    private String plataforma;
+    private String local;
 
-    public Filme(String nome, int anoLancamento, String plataforma){
+    public Filme(String nome, String anoLancamento, String plataforma){
         this.nome = nome;
         this.anoLancamento = anoLancamento;
-        this.plataforma = plataforma;
+        this.local = plataforma;
     }
 
     public String toString() {
-        return this.nome + " - " + this.anoLancamento;
+        return this.nome + ", " + this.anoLancamento + "\n" + this.local + "\n";
     }
 
     @Override
@@ -25,7 +25,7 @@ public class Filme {
             return false;
         }
         Filme oFilme = (Filme) o;
-        if (oFilme.getNome() == this.nome && oFilme.getLancamento() == this.getLancamento()) {
+        if (oFilme.getNome().equals(this.nome) && oFilme.getLancamento().equals(this.anoLancamento)) {
             return true;
         }
         return false;
@@ -40,12 +40,12 @@ public class Filme {
         return this.nome;
     }
 
-    public int getLancamento() {
+    public String getLancamento() {
         return this.anoLancamento;
     }
 
     public String getPlataforma() {
-        return this.plataforma;
+        return this.local;
     }
 
 }
